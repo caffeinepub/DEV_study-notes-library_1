@@ -1,0 +1,11 @@
+manifest_version = "0.1.0"
+
+[project]
+id = "noteswap"
+name = "NoteSwap"
+
+[workspace]
+include = ["src/**"]
+
+[canisters.frontend]
+depends_on = ["backend"]
