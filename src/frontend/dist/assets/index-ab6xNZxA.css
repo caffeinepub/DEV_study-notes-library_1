@@ -2905,7 +2905,7 @@ video {
 }
 
 :root {
-  --background: #ffffff;
+  --background: #f5e6c8;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -2965,7 +2965,7 @@ video {
 }
 
 .dark {
-  --background: #020617;
+  --background: #2a1f0e;
   --foreground: #f8fafc;
   --card: #0f172a;
   --card-foreground: #f8fafc;

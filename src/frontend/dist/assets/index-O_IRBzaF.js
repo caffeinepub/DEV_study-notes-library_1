@@ -11700,7 +11700,7 @@ async function loadConfig() {
     const fullConfig = {
       backend_host: config.backend_host === "undefined" ? void 0 : config.backend_host,
       backend_canister_id: config.backend_canister_id === "undefined" ? backendCanisterId : config.backend_canister_id,
-      storage_gateway_url: runtimeStorageGatewayUrl ?? "https://blob.caffeine.ai" ?? "nogateway",
+      storage_gateway_url: runtimeStorageGatewayUrl ?? "https://dev-blob.caffeine.ai" ?? "nogateway",
       bucket_name: DEFAULT_BUCKET_NAME,
       project_id: config.project_id !== "undefined" ? config.project_id : DEFAULT_PROJECT_ID,
       ii_derivation_origin: config.ii_derivation_origin === "undefined" ? void 0 : config.ii_derivation_origin
@@ -29363,6 +29363,13 @@ const ProfileWithStats = Record({
   "totalUpvotesReceived": Nat
 });
 Service({
+  "__accessControlState": Func([], [Reserved], ["query"]),
+  "__nextNoteId": Func([], [Nat], ["query"]),
+  "__noteUpvoters": Func([], [Reserved], ["query"]),
+  "__notes": Func([], [Reserved], ["query"]),
+  "__userBookmarks": Func([], [Reserved], ["query"]),
+  "__userNoteCounts": Func([], [Reserved], ["query"]),
+  "__userProfiles": Func([], [Reserved], ["query"]),
   "_initialize_access_control": Func([], [], []),
   "_internet_identity_sign_in_finish": Func([], [Result], []),
   "_internet_identity_sign_in_start": Func([], [Vec(Nat8)], []),
@@ -29517,6 +29524,13 @@ const idlFactory = ({ IDL: IDL2 }) => {
     "totalUpvotesReceived": IDL2.Nat
   });
   return IDL2.Service({
+    "__accessControlState": IDL2.Func([], [IDL2.Reserved], ["query"]),
+    "__nextNoteId": IDL2.Func([], [IDL2.Nat], ["query"]),
+    "__noteUpvoters": IDL2.Func([], [IDL2.Reserved], ["query"]),
+    "__notes": IDL2.Func([], [IDL2.Reserved], ["query"]),
+    "__userBookmarks": IDL2.Func([], [IDL2.Reserved], ["query"]),
+    "__userNoteCounts": IDL2.Func([], [IDL2.Reserved], ["query"]),
+    "__userProfiles": IDL2.Func([], [IDL2.Reserved], ["query"]),
     "_initialize_access_control": IDL2.Func([], [], []),
     "_internet_identity_sign_in_finish": IDL2.Func([], [Result2], []),
     "_internet_identity_sign_in_start": IDL2.Func([], [IDL2.Vec(IDL2.Nat8)], []),
@@ -29622,6 +29636,104 @@ class Backend {
     this._uploadFile = _uploadFile;
     this._downloadFile = _downloadFile;
     this.processError = processError2;
+  }
+  async __accessControlState() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.__accessControlState();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.__accessControlState();
+      return result;
+    }
+  }
+  async __nextNoteId() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.__nextNoteId();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.__nextNoteId();
+      return result;
+    }
+  }
+  async __noteUpvoters() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.__noteUpvoters();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.__noteUpvoters();
+      return result;
+    }
+  }
+  async __notes() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.__notes();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.__notes();
+      return result;
+    }
+  }
+  async __userBookmarks() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.__userBookmarks();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.__userBookmarks();
+      return result;
+    }
+  }
+  async __userNoteCounts() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.__userNoteCounts();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.__userNoteCounts();
+      return result;
+    }
+  }
+  async __userProfiles() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.__userProfiles();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.__userProfiles();
+      return result;
+    }
   }
   async _initialize_access_control() {
     if (this.processError) {

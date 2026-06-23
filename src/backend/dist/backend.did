@@ -1,0 +1,146 @@
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = 
+ record {
+   createdAt: int;
+   name: text;
+ };
+type Subject = 
+ variant {
+   Art;
+   ComputerScience;
+   Economics;
+   English;
+   History;
+   Languages;
+   Mathematics;
+   Music;
+   Other;
+   Philosophy;
+   Science;
+ };
+type SortBy = 
+ variant {
+   MostUpvoted;
+   Newest;
+   RecentlyUpdated;
+ };
+type Result = 
+ variant {
+   err: Error;
+   ok;
+ };
+type ProfileWithStats = 
+ record {
+   createdAt: int;
+   name: text;
+   noteCount: nat;
+   totalUpvotesReceived: nat;
+ };
+type NoteResponse = 
+ record {
+   author: principal;
+   authorName: text;
+   content: text;
+   createdAt: int;
+   description: text;
+   id: nat;
+   isBookmarkedByMe: bool;
+   isUpvotedByMe: bool;
+   subject: Subject;
+   tags: vec text;
+   title: text;
+   updatedAt: int;
+   upvoteCount: nat;
+ };
+type NoteListResult = 
+ record {
+   nextCursor: opt nat;
+   notes: vec NoteListItem;
+ };
+type NoteListItem = 
+ record {
+   author: principal;
+   authorName: text;
+   createdAt: int;
+   description: text;
+   id: nat;
+   isBookmarkedByMe: bool;
+   isUpvotedByMe: bool;
+   subject: Subject;
+   tags: vec text;
+   title: text;
+   updatedAt: int;
+   upvoteCount: nat;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+service : {
+  __accessControlState: () -> (reserved) query;
+  __nextNoteId: () -> (nat) query;
+  __noteUpvoters: () -> (reserved) query;
+  __notes: () -> (reserved) query;
+  __userBookmarks: () -> (reserved) query;
+  __userNoteCounts: () -> (reserved) query;
+  __userProfiles: () -> (reserved) query;
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  bookmarkNote: (id: nat) -> ();
+  createNote: (title: text, description: text, content: text, subject:
+   Subject, tags: vec text) -> (nat);
+  deleteNote: (id: nat) -> ();
+  getAllNotes: (cursor: opt nat, limit: nat, sort: SortBy) ->
+   (NoteListResult) query;
+  getBookmarkIds: () -> (vec nat) query;
+  getBookmarks: (cursor: opt nat, limit: nat) -> (NoteListResult) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getNote: (id: nat) -> (opt NoteResponse) query;
+  getNotesBySubject: (subject: Subject, cursor: opt nat, limit: nat, sort:
+   SortBy) -> (NoteListResult) query;
+  getNotesByTag: (tag: text, cursor: opt nat, limit: nat) ->
+   (NoteListResult) query;
+  getPopularTags: (limit: nat) -> (vec text) query;
+  getProfile: () -> (opt UserProfile) query;
+  getSubjectCounts: () -> (vec record {
+                                 Subject;
+                                 nat;
+                               }) query;
+  getUserNotes: ("principal": principal, cursor: opt nat, limit: nat) ->
+   (NoteListResult) query;
+  getUserProfile: ("principal": principal) -> (opt ProfileWithStats) query;
+  isCallerAdmin: () -> (bool) query;
+  removeBookmark: (id: nat) -> ();
+  removeUpvote: (id: nat) -> ();
+  searchNotes: (searchQuery: text, subject: opt Subject, cursor: opt nat,
+   limit: nat) -> (NoteListResult) query;
+  setProfile: (name: text) -> ();
+  updateNote: (id: nat, title: text, description: text, content: text,
+   subject: Subject, tags: vec text) -> ();
+  upvoteNote: (id: nat) -> ();
+}
